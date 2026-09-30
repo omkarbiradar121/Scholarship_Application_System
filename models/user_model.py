@@ -8,10 +8,7 @@ def get_user_by_email(email):
         WHERE email = :email
     """
 
-    rows = fetch_records(
-        query,
-        {"email": email}
-    )
+    rows = fetch_records(query, {"email": email})
 
     if rows:
         return rows[0]
@@ -36,3 +33,26 @@ def create_student(name, email, password, student_id):
             "student_id": student_id
         }
     )
+
+
+def authenticate_user(email, password):
+    query = """
+        SELECT id, name, email, password, role
+        FROM users
+        WHERE email = :email
+    """
+
+    rows = fetch_records(query, {"email": email})
+
+    if rows:
+        user = rows[0]
+
+        if user.password == password:
+            return {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "role": user.role
+            }
+
+    return None

@@ -8,7 +8,7 @@ from models import db
 from controllers.main_controller import main
 from controllers.db_controller import db_bp
 from controllers.auth_controller import auth
-
+from controllers.dashboard_controller import dashboard_bp
 
 load_dotenv()
 
@@ -40,6 +40,8 @@ app.register_blueprint(main)
 app.register_blueprint(db_bp)
 
 app.register_blueprint(auth)
+
+app.register_blueprint(dashboard_bp)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, session, redirect, url_for
 
-from models.user_model import get_user_by_email, create_student
-
+from models.user_model import get_user_by_email, create_student, authenticate_user
 
 auth = Blueprint("auth", __name__)
 
@@ -43,3 +42,38 @@ def register():
     )
 
     return render_template("register.html")
+
+@auth.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+
+    email = request.form.get("email", "").strip().lower()
+    password = request.form.get("password", "")
+
+    if not email or not password:
+        flash("Email and password are required.", "error")
+        return render_template("login.html")
+
+    user = authenticate_user(email, password)
+
+    if not user:
+        flash("Invalid email or password.", "error")
+        return render_template("login.html")
+
+    session["user_id"] = user["id"]
+    session["user_name"] = user["name"]
+    session["role"] = user["role"]
+
+    if user["role"] == "Scholarship Officer":
+        return redirect(url_for("dashboard.admin_dashboard"))
+
+    return redirect(url_for("dashboard.student_dashboard"))
+
+
+
+@auth.route("/logout", methods=["GET"])
+def logout():
+    session.clear()
+    session.modified = True
+    return redirect(url_for("auth.login"))

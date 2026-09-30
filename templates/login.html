@@ -1,9 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarship Application</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/login.css') }}"
+    >
 </head>
+
 <body>
-    <h1>Login Page</h1>
+
+    <div class="login-card">
+
+        <div class="icon">🎓</div>
+
+        <h1>Scholarship Application</h1>
+
+        <p>Login to access your dashboard</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form id="login-form" method="POST" action="{{ url_for('auth.login') }}">
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                >
+            </div>
+
+            <button
+                type="submit"
+                id="login-submit-btn"
+                class="btn-login"
+            >
+                Login
+            </button>
+
+        </form>
+
+        <div class="footer">
+            Don't have an account?
+            <a href="{{ url_for('auth.register') }}" id="register-link">
+                Register here
+            </a>
+        </div>
+
+    </div>
+
 </body>
 </html>
