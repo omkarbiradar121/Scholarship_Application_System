@@ -36,12 +36,8 @@ def register():
         student_id
     )
 
-    flash(
-        "Registration successful. Please login to continue.",
-        "success"
-    )
-
-    return render_template("register.html")
+    flash("Registration successful. Please login to continue.", "success")
+    return redirect(url_for("auth.login"))
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():

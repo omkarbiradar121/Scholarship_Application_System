@@ -9,6 +9,8 @@ from controllers.main_controller import main
 from controllers.db_controller import db_bp
 from controllers.auth_controller import auth
 from controllers.dashboard_controller import dashboard_bp
+from controllers.admin_controller import admin_bp
+from controllers.student_controller import student_bp
 
 load_dotenv()
 
@@ -42,7 +44,9 @@ app.register_blueprint(db_bp)
 app.register_blueprint(auth)
 
 app.register_blueprint(dashboard_bp)
+app.register_blueprint(admin_bp)
+app.register_blueprint(student_bp)
 
 
 if __name__ == "__main__":
-    app.run(port=int(os.getenv("PORT", "5001")))
+    app.run(port=int(os.getenv("PORT", "5001")), debug=True)

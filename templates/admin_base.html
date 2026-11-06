@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Scholarship System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body class="dashboard-shell">
+    <aside class="sidebar" id="admin-sidebar">
+        <a class="brand" href="{{ url_for('dashboard.admin_dashboard') }}"><span class="brand-icon" aria-hidden="true">✦</span><span>Scholarship System</span></a>
+        <nav id="admin-nav" aria-label="Scholarship Officer navigation">
+            <ul class="nav-menu">
+                <li><a id="nav-admin-dashboard" class="{% if active_page|default('dashboard') == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard.admin_dashboard') }}"><span>⌂</span>Dashboard</a></li>
+                <li><a id="nav-admin-scholarships" class="{% if active_page|default('') == 'scholarships' %}active{% endif %}" href="{{ url_for('admin.scholarships') }}"><span>▤</span>Scholarships</a></li>
+                <li><a id="nav-admin-application-requests" class="{% if active_page|default('') == 'application-requests' %}active{% endif %}" href="{{ url_for('admin.application_requests') }}"><span>▣</span>Application Requests</a></li>
+                <li><a id="nav-admin-scholarship-processing" class="{% if active_page|default('') == 'scholarship-processing' %}active{% endif %}" href="{{ url_for('admin.scholarship_processing') }}"><span>◷</span>Scholarship Processing</a></li>
+                <li><a id="nav-admin-history" class="{% if active_page|default('') == 'history' %}active{% endif %}" href="{{ url_for('admin.history') }}"><span>↺</span>History</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile"><span class="avatar" aria-hidden="true">{{ session['user_name'][:1]|upper }}</span><div><strong id="admin-user-name">{{ session['user_name'] }}</strong><span>Scholarship Officer</span></div></div>
+            <a id="admin-logout-link" class="logout-link" href="{{ url_for('auth.logout') }}"><span aria-hidden="true">↪</span>Logout</a>
+        </div>
+    </aside>
+    <main class="main-content">{% block content %}{% endblock %}</main>
+</body>
+</html>

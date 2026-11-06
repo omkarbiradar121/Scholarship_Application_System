@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Scholarship System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body class="dashboard-shell">
+    <aside class="sidebar" id="student-sidebar">
+        <a class="brand" href="{{ url_for('dashboard.student_dashboard') }}"><span class="brand-icon" aria-hidden="true">✦</span><span>Scholarship System</span></a>
+        <nav id="student-nav" aria-label="Student navigation">
+            <ul class="nav-menu">
+                <li><a id="nav-student-dashboard" class="{% if active_page|default('dashboard') == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard.student_dashboard') }}"><span>⌂</span>Dashboard</a></li>
+                <li><a id="nav-student-scholarships" class="{% if active_page|default('') == 'scholarships' %}active{% endif %}" href="{{ url_for('student.scholarships') }}"><span>▤</span>Browse Scholarships</a></li>
+                <li><a id="nav-student-applications" class="{% if active_page|default('') == 'applications' %}active{% endif %}" href="{{ url_for('student.applications') }}"><span>▣</span>My Applications</a></li>
+                <li><a id="nav-student-history" class="{% if active_page|default('') == 'history' %}active{% endif %}" href="{{ url_for('student.history') }}"><span>↺</span>History</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile"><span class="avatar" aria-hidden="true">{{ session['user_name'][:1]|upper }}</span><div><strong id="student-user-name">{{ session['user_name'] }}</strong><span>Student</span></div></div>
+            <a id="student-logout-link" class="logout-link" href="{{ url_for('auth.logout') }}"><span aria-hidden="true">↪</span>Logout</a>
+        </div>
+    </aside>
+    <main class="main-content">{% block content %}{% endblock %}</main>
+</body>
+</html>
